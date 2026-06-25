@@ -6,6 +6,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { ContactsApp } from "./ContactsApp";
 import { BlogPage } from "./pages/Blog";
 import { TodoApp } from "./TodoApp";
+import { AddProduct } from "./Components/AddProduct";
+import { GetAllProducts } from "./Components/GetAllProducts";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
@@ -13,6 +15,8 @@ createRoot(document.getElementById("root")!).render(
       <ContactsApp />
       <BlogPage />
       <TodoApp />
+      <AddProduct />
+      <GetAllProducts />
     </AuthProvider>
   </StrictMode>,
 );

@@ -58,29 +58,43 @@ export function TodoApp() {
   }
 
   return (
-    <>
-      <h1>Todo</h1>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button onClick={addTodo}>Ajouter</button>
-      <ul>
+    <div className="products-container">
+      <h1>✅ Todo</h1>
+      <div className="products-form">
+        <input
+          type="text"
+          placeholder="Nouvelle tâche..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button onClick={addTodo}>Ajouter</button>
+      </div>
+      <ul style={{ listStyle: "none", padding: 0 }}>
         {todos.map((todo) => (
-          <li key={todo.id}>
+          <li
+            key={todo.id}
+            className="product-item"
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
+          >
             <input
               type="checkbox"
               checked={todo.completed}
               onChange={() => toggleTodo(todo)}
             />
-            <span>{todo.text}</span>
+            <span
+              style={{
+                textDecoration: todo.completed ? "line-through" : "none",
+                flex: 1,
+              }}
+            >
+              {todo.text}
+            </span>
             {todo.userId === user?.uid && (
-              <button onClick={() => deleteTodo(todo)}>Supprimer</button>
+              <button onClick={() => deleteTodo(todo)}>🗑️ Supprimer</button>
             )}
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

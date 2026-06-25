@@ -27,7 +27,6 @@ function App() {
   const [filter, setFilter] = useState<Category | "all">("all");
   const [search, setSearch] = useState<string>("");
 
-
   useEffect(() => {
     if (!user) return;
 
@@ -97,43 +96,43 @@ function App() {
   );
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="notes-container">
       <h1>📝 Mes Notes</h1>
       <p>Connecté : {user.email}</p>
       <button onClick={() => signOut(auth)}>🚪 Se déconnecter</button>
 
       {/* Formulaire */}
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Titre"
-      />
-      <textarea
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
-        placeholder="Contenu"
-      />
-
-      {/* Catégorie */}
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value as Category)}
-      >
-        <option value="work">💼 Travail</option>
-        <option value="personal">👤 Personnel</option>
-        <option value="ideas">💡 Idées</option>
-      </select>
-      <button onClick={addNote}>Ajouter</button>
+      <div className="notes-form">
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Titre"
+        />
+        <textarea
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          placeholder="Contenu"
+        />
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value as Category)}
+        >
+          <option value="work">💼 Travail</option>
+          <option value="personal">👤 Personnel</option>
+          <option value="ideas">💡 Idées</option>
+        </select>
+        <button onClick={addNote}>Ajouter</button>
+      </div>
 
       {/* Filtres */}
-      <div>
+      <div className="notes-filters">
         <button onClick={() => setFilter("all")}>Toutes</button>
         <button onClick={() => setFilter("work")}>💼 Travail</button>
         <button onClick={() => setFilter("personal")}>👤 Personnel</button>
         <button onClick={() => setFilter("ideas")}>💡 Idées</button>
       </div>
 
-      {/* Recherche bonus */}
+      {/* Recherche */}
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -142,10 +141,7 @@ function App() {
 
       {/* Liste des notes */}
       {filteredNotes.map((note: Note) => (
-        <div
-          key={note.id}
-          style={{ border: "1px solid gray", margin: "1rem", padding: "1rem" }}
-        >
+        <div key={note.id} className="note-item">
           <h3>{note.title}</h3>
           <p>{note.body}</p>
           <small>{note.category}</small>

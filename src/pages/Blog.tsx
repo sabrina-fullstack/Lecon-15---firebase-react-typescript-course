@@ -74,34 +74,38 @@ export function BlogPage() {
     await updateDoc(doc(db, "posts", post.id), data);
   }
   return (
-    <div className="App">
-      <h1>Blog</h1>
-      <input
-        type="text"
-        placeholder="Titre"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <textarea
-        placeholder="Contenu"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <button onClick={addPost}>Ajouter</button>
+    <div className="products-container">
+      <h1>📝 Blog</h1>
+      <div className="products-form">
+        <input
+          type="text"
+          placeholder="Titre"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="Contenu"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <button onClick={addPost}>Ajouter</button>
+      </div>
       {posts.map((post) => (
-        <div key={post.id}>
+        <div key={post.id} className="product-item">
           <h2>{post.title}</h2>
           <p>{post.content}</p>
-          <p>Auteur: {post.authorName}</p>
-          <button onClick={() => deletePost(post)}>Supprimer</button>
-          <button
-            onClick={() => {
-              const newTitle = prompt("Nouveau titre ?");
-              if (newTitle) updatePost(post, { title: newTitle });
-            }}
-          >
-            Modifier
-          </button>
+          <small>✍️ {post.authorName}</small>
+          <div>
+            <button onClick={() => deletePost(post)}>🗑️ Supprimer</button>
+            <button
+              onClick={() => {
+                const newTitle = prompt("Nouveau titre ?");
+                if (newTitle) updatePost(post, { title: newTitle });
+              }}
+            >
+              ✏️ Modifier
+            </button>
+          </div>
         </div>
       ))}
     </div>

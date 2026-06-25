@@ -59,10 +59,11 @@ export function ContactsApp() {
   }
 
   return (
-    <div>
-      <h1>Contacts</h1>
+  <div className="products-container">
+    <h1>📋 Contacts</h1>
+    <div className="products-form">
       <input
-        placeholder="Name"
+        placeholder="Nom"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
@@ -72,28 +73,29 @@ export function ContactsApp() {
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
-        placeholder="Phone"
+        placeholder="Téléphone"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />
-      <button onClick={addContact}>Add</button>
-      {contacts.map((contact) => (
-        <div key={contact.id}>
-          <p>{contact.name}</p>
-          <p>{contact.email}</p>
-          <p>{contact.phone}</p>
-          <button onClick={() => deleteContact(contact.id)}>Delete</button>
-          <button onClick={() => deleteContact(contact.id)}>Delete</button>
-          <button
-            onClick={() => {
-              const newName = prompt("Nouveau nom ?");
-              if (newName) updateContact(contact.id, { name: newName });
-            }}
-          >
-            Modifier
-          </button>
-        </div>
-      ))}
+      <button onClick={addContact}>Ajouter</button>
     </div>
-  );
+    {contacts.map((contact) => (
+      <div key={contact.id} className="product-item">
+        <p><strong>{contact.name}</strong></p>
+        <p>{contact.email}</p>
+        <p>{contact.phone}</p>
+        <button onClick={() => deleteContact(contact.id)}>🗑️ Supprimer</button>
+        <button
+          onClick={() => {
+            const newName = prompt("Nouveau nom ?");
+            if (newName) updateContact(contact.id, { name: newName });
+          }}
+        >
+          ✏️ Modifier
+        </button>
+      </div>
+    ))}
+  </div>
+);
+  
 }
