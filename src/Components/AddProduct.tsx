@@ -3,6 +3,7 @@ import { addDoc } from "firebase/firestore";
 import { productsCollection } from "../collections";
 import type { NewProduct } from "../types/product";
 import "../App.css";
+
 export function AddProduct() {
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
@@ -11,10 +12,24 @@ export function AddProduct() {
   const [message, setMessage] = useState("");
 
   async function handleAddProduct(): Promise<void> {
+    // VALIDATION
+    if (!name.trim()) {
+      setMessage("Le nom est obligatoire");
+      return;
+    }
+    if (price <= 0 || isNaN(price)) {
+      setMessage("Le prix doit être un nombre positif");
+      return;
+    }
+    if (!description.trim()) {
+      setMessage("La description est obligatoire");
+      return;
+    }
+
     const newProduct: NewProduct = {
-      name,
+      name: name.trim(),
       price,
-      description,
+      description: description.trim(),
     };
     setLoading(true);
     try {
@@ -29,6 +44,7 @@ export function AddProduct() {
       setLoading(false);
     }
   }
+
   return (
     <div className="products-container">
       <h1>Ajouter un produit</h1>
@@ -39,6 +55,7 @@ export function AddProduct() {
           onChange={(e) => setName(e.target.value)}
         />
         <input
+          type="number"
           placeholder="Prix"
           value={price}
           onChange={(e) => setPrice(Number(e.target.value))}
@@ -48,7 +65,9 @@ export function AddProduct() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <button onClick={handleAddProduct}>Ajouter le produit</button>
+        <button onClick={handleAddProduct} disabled={loading}>
+          {loading ? "Ajout en cours..." : "Ajouter le produit"}
+        </button>
       </div>
       {message && <p>{message}</p>}
     </div>
